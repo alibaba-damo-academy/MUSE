@@ -1,6 +1,6 @@
 # MUSE: Multi-Scale Dense Self-Distillation for Nucleus Detection and Classification [Pre-Training]
 
-This repo is the pre-training code of MUSE: "MUSE: Multi-Scale Dense Self-Distillation for Nucleus Detection and Classification". For downstream fine-tuning, please refer to [Fine-Tuning repo]().
+This repo is the pre-training code of MUSE: "MUSE: Multi-Scale Dense Self-Distillation for Nucleus Detection and Classification".
 
 <div  align="center">    
 <img src="./imgs/MUSE.png" width = "80%"/>
@@ -8,7 +8,12 @@ This repo is the pre-training code of MUSE: "MUSE: Multi-Scale Dense Self-Distil
 
 In this work, we propose **MUSE** (**MU**lti-scale den**SE** self-distillation), a novel self-supervised learning method tailored for NDC. At its core is **NuLo** (**Nu**cleus-based **Lo**cal self-distillation), a coordinate-guided mechanism that enables flexible local self-distillation based on predicted nucleus positions. By removing the need for strict spatial alignment between augmented views, NuLo allows critical cross-scale alignment, thus unlocking the capacity of models for fine-grained nucleus-level representation. To support MUSE, we design a simple yet effective encoder-decoder architecture and a large field-of-view semi-supervised fine-tuning strategy that together maximize the value of unlabeled pathology images. Extensive experiments on three widely used benchmarks demonstrate that MUSE effectively addresses the core challenges of histopathological NDC. The resulting models not only surpass state-of-the-art supervised baselines but also outperform generic pathology foundation models.
 
-For more details, please refer to the paper: [arxiv]().
+For more details, please refer to the paper: [arxiv](https://arxiv.org/abs/2511.05170).
+
+## News
+
+- ✨️ **[2025-12]**: Release the pre-trained weights and evaluation code. 🚀
+- ✨️ **[2025-11]**: Accepted to AAAI 2026! 🎉🎉🎉
 
 ## Quick Start
 
@@ -16,7 +21,7 @@ For more details, please refer to the paper: [arxiv]().
 
 ```bash
 # clone this repository
-git clone https://github.com/XXXX/MUSE.git
+git clone https://github.com/alibaba-damo-academy/MUSE.git
 cd ./MUSE
 
 # create & activate conda env
@@ -280,3 +285,21 @@ To summary the results of each method, you can run `python summarize_res.py --mo
 | MUSE (ViT-B/16) | 88.43 | 86.03 | 84.18 | 89.60 | 86.87 | 82.46 |
 | LFoV-MUSE (ViT-S/16) | 86.29 | 87.54 | 83.81 | 86.59 | 88.01 | 84.56 |
 | LFoV-MUSE (ViT-B/16) | 89.29 | 87.05 | 84.84 | 90.26 | 87.87 | 85.74 |
+
+
+## License
+
+This repository is released under the Apache 2.0 license as found in the [LICENSE](https://github.com/alibaba-damo-academy/MUSE/blob/main/LICENSE) file.
+
+## Citation
+
+If you find the code and pre-trained models useful for your research, please consider citing our paper. 😊
+
+```
+@article{yang2025muse,
+  title={MUSE: Multi-Scale Dense Self-Distillation for Nucleus Detection and Classification},
+  author={Yang, Zijiang and Chao, Hanqing and Zhao, Bokai and Yang, Yelin and Zhang, Yunshuo and Fu, Dongmei and Zhang, Junping and Lu, Le and Yan, Ke and Jin, Dakai and others},
+  journal={arXiv preprint arXiv:2511.05170},
+  year={2025}
+}
+```
