@@ -8,7 +8,7 @@ This repo is the pre-training code of MUSE: "MUSE: Multi-Scale Dense Self-Distil
 
 In this work, we propose **MUSE** (**MU**lti-scale den**SE** self-distillation), a novel self-supervised learning method tailored for NDC. At its core is **NuLo** (**Nu**cleus-based **Lo**cal self-distillation), a coordinate-guided mechanism that enables flexible local self-distillation based on predicted nucleus positions. By removing the need for strict spatial alignment between augmented views, NuLo allows critical cross-scale alignment, thus unlocking the capacity of models for fine-grained nucleus-level representation. To support MUSE, we design a simple yet effective encoder-decoder architecture and a large field-of-view semi-supervised fine-tuning strategy that together maximize the value of unlabeled pathology images. Extensive experiments on three widely used benchmarks demonstrate that MUSE effectively addresses the core challenges of histopathological NDC. The resulting models not only surpass state-of-the-art supervised baselines but also outperform generic pathology foundation models.
 
-For more details, please refer to the paper: [arxiv](https://arxiv.org/abs/2511.05170).
+| 📖 [arXiv](https://arxiv.org/abs/2511.05170) | 🤗 [Pre-Trained Weights](https://huggingface.co/Alibaba-DAMO-Academy/MUSE) |
 
 ## News
 
@@ -34,7 +34,7 @@ pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 --index-url https
 pip install -r requirements.txt
 ```
 
-This codebase has been developed with python version 3.10, PyTorch version 2.2.2, CUDA 11.8.
+This codebase has been developed with Python version 3.10, PyTorch version 2.2.2, and CUDA 11.8.
 
 * Extensions
 
@@ -53,7 +53,7 @@ Please download and unzip the [BRCAM2C](https://github.com/TopoXLab/Dataset-BRCA
 In addition, [TCGA](https://portal.gdc.cancer.gov/) is also required for the pre-processing of BRCAM2C and OCELOT.
 
 For `BRCAM2C` and `OCELOT`, we use the default split of train/val/test.
-For `PUMA`, we manually split the dataset into train/val/test. The split files of `PUMA` is provided in `./data/PUMA/` and should be moved to the dataset of `PUMA` before running the pre-processing (keeping the same directory structure `/PUMAFolder/split/...`).
+For `PUMA`, we manually split the dataset into train/val/test. The split files of `PUMA` are provided in `./data/PUMA/` and should be moved to the dataset of `PUMA` before running the pre-processing (keeping the same directory structure `/PUMAFolder/split/...`).
 
 * Pre-processing
 
@@ -91,15 +91,23 @@ dataset/
 ```
 The evaluation scripts will automatically load the pre-processed datasets from `./dataset/`.
 
-### Pre-trained models
+### Pre-Trained Models
 
-The evaluation framework support to fully reproduce the results in our paper.
-We provide the pre-trained models of MUSE. For other methods, please refer to the corresponding repositories to download the pre-trained models.
+We provide the pre-trained models of MUSE at [Hugging Face](https://huggingface.co/Alibaba-DAMO-Academy/MUSE).
 
-For example, to reproduce the results of UNI:
-1. download the pre-trained UNI from [HF_link](https://huggingface.co/MahmoodLab/uni)
-2. change the `model_weights` in `./models/uni.py (Line 13)` to the path of the pre-trained UNI.
-3. run evaluation scripts.
+| Model | pre-trained weights |
+| :---: | :------: |
+| MUSE (ResNet-50) | [download](https://huggingface.co/Alibaba-DAMO-Academy/MUSE/resolve/main/r50-224.pth) |
+| MUSE (ViT-S/16) | [download](https://huggingface.co/Alibaba-DAMO-Academy/MUSE/resolve/main/vit_s_16-224.pth) |
+| MUSE (ViT-B/16) | [download](https://huggingface.co/Alibaba-DAMO-Academy/MUSE/resolve/main/vit_b_16-224.pth) |
+| LFoV-MUSE (ResNet-50) | [download](https://huggingface.co/Alibaba-DAMO-Academy/MUSE/resolve/main/r50-512.pth) |
+| LFoV-MUSE (ViT-S/16) | [download](https://huggingface.co/Alibaba-DAMO-Academy/MUSE/resolve/main/vit_s_16_512.pth) |
+| LFoV-MUSE (ViT-B/16) | [download](https://huggingface.co/Alibaba-DAMO-Academy/MUSE/resolve/main/vit_b_16_512.pth) |
+
+For other methods, please refer to the corresponding repositories to download the pre-trained models. For example, to reproduce the results of UNI:
+1. Download the pre-trained UNI from [HF_link](https://huggingface.co/MahmoodLab/uni)
+2. Change the `model_weights` in `./models/uni.py (Line 13)` to the path of the pre-trained UNI.
+3. Run evaluation scripts.
 
 Note: To evaluate CONCH, the [customized model](https://github.com/mahmoodlab/CONCH/tree/main/conch) is required. You need to download these files and copy them to `./models/conch/`
 
@@ -132,7 +140,6 @@ Note: To evaluate CONCH, the [customized model](https://github.com/mahmoodlab/CO
 
 ### Customized Models
 
-The evaluation framework support to evaluate customized models.
 The basic structure of a customized model is as follows:
 ```python
 # ================
@@ -171,7 +178,7 @@ class CustomizedModel(nn.Module):
 ```
 Move the customized model to `./models/` and register it in `./models/__init__.py`, `linear_knn_eval.py`, and `finetuning_eval.py`.
 
-The `./models/dino_vit.py` is an good example. Please refer to the `./models/dino_vit.py` for more details.
+The `./models/dino_vit.py` is a good example. Please refer to the `./models/dino_vit.py` for more details.
 
 ## Evaluation
 
@@ -198,13 +205,13 @@ where `$METHOD` is the name of the method to evaluate, `$EVAL_SIZE` is the FoV (
 
 Note I: Fine-tuning evaluation will attempt to load the prediction heads trained in Linear Probing evaluation. Therefore, performing linear probing evaluation before fine-tuning evaluation is necessary.
 
-Note II: The default learning rate (1e-5) and batch size (32) is suggested to be used for ViT-based models. For ResNet-based models, larger learning rate (4e-5) is recommended.
+Note II: The default learning rate (1e-5) and batch size (32) are suggested to be used for ViT-based models. For ResNet-based models, a larger learning rate (4e-5) is recommended.
 
 ## Results
 
-To summary the results of each method, you can run `python summarize_res.py --model_name $METHOD --eval_size $EVAL_SIZE`
+To summarize the results of each method, you can run `python summarize_res.py --model_name $METHOD --eval_size $EVAL_SIZE`.
 
-### KNN Evalation
+### KNN Evaluation
 
 |Method|BRCAM2C (20x)|OCELOT (20x)|PUMA (20x)|BRCAM2C (40x)|OCELOT (40x)|PUMA (40x)|
 | --- | --- | --- | --- | --- | --- | --- |
